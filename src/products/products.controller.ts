@@ -13,7 +13,7 @@ import {
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { PaginationDto } from '../common';
 import { PRODUCTS_SERVICE } from '../config';
-import { catchError } from 'rxjs';
+import { catchError, firstValueFrom } from 'rxjs';
 
 @Controller('products')
 export class ProductsController {
@@ -36,10 +36,12 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.productsClient.send({ cmd: 'find_one_product' }, { id }).pipe(
-      catchError((err) => {
-        throw new RpcException(err);
-      }),
+    return firstValueFrom(
+      this.productsClient.send({ cmd: 'find_one_product' }, { id }).pipe(
+        catchError((err) => {
+          throw new RpcException(err);
+        }),
+      ),
     );
   }
 
