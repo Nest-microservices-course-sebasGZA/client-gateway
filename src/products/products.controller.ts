@@ -8,9 +8,11 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { PRODUCTS_SERVICE } from 'src/config';
+import { PaginationDto } from '../common';
+import { PRODUCTS_SERVICE } from '../config';
 
 @Controller('products')
 export class ProductsController {
@@ -24,8 +26,11 @@ export class ProductsController {
   }
 
   @Get()
-  findAllProducts() {
-    return this.productsClient.send({ cmd: 'find_all_products' }, {});
+  findAllProducts(@Query() paginationDto: PaginationDto) {
+    return this.productsClient.send(
+      { cmd: 'find_all_products' },
+      paginationDto,
+    );
   }
 
   @Get(':id')
