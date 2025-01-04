@@ -10,7 +10,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 
 import { ORDERS_SERVICE } from '../config';
-import { CreateOrderDto } from './dto/create-order.dto';
+import { CreateOrderDto } from './dto';
 
 @Controller('orders')
 export class OrdersController {
