@@ -16,6 +16,5 @@
 1. Clone repository
 2. Install dependencies
 3. Create a file `.env` based on `env.template` variables
-4. Execute migrations with prisma `npx prisma migrate dev`
 5. Execute to run the application `pnpm run start:dev`
 
