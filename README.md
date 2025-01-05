@@ -18,3 +18,6 @@
 3. Create a file `.env` based on `env.template` variables
 5. Execute to run the application `pnpm run start:dev`
 
+## Nats
+Run `docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats`
+
