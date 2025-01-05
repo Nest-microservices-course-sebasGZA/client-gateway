@@ -8,3 +8,14 @@
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
     <p align="center">
   
+
+# Client Gateway
+
+## Dev
+
+1. Clone repository
+2. Install dependencies
+3. Create a file `.env` based on `env.template` variables
+4. Execute migrations with prisma `npx prisma migrate dev`
+5. Execute to run the application `pnpm run start:dev`
+
