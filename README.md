@@ -16,6 +16,6 @@
 1. Clone repository
 2. Install dependencies
 3. Create a file `.env` based on `env.template` variables
-4. Execute migrations with prisma `npx prisma migrate dev`
+4. Run `docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats`
 5. Execute to run the application `pnpm run start:dev`
 

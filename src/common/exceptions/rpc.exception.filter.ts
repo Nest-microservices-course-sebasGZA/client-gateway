@@ -13,6 +13,14 @@ export class RpcCustomExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const rpcError = exception.getError();
 
+    if (rpcError.toString().includes('Empty response'))
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        nessage: rpcError
+          .toString()
+          .substring(0, rpcError.toString().indexOf('(') - 1),
+      });
+
     if (
       typeof rpcError === 'object' &&
       'status' in rpcError &&
