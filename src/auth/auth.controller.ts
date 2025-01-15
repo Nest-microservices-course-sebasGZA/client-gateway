@@ -18,6 +18,6 @@ export class AuthController {
 
   @Get('verify')
   verifyUser() {
-    return this.client.send('auth.verify.token', {});
+    return this.client.send('auth.verify.user', {});
   }
 }
