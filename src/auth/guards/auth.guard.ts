@@ -1,23 +1,30 @@
+import { Request } from 'express';
 import {
   CanActivate,
   ExecutionContext,
+  Inject,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { ClientProxy } from '@nestjs/microservices';
+
+import { NATS_SERVICE } from '../../config';
+import { firstValueFrom } from 'rxjs';
 
 export class AuthGuard implements CanActivate {
+  constructor(@Inject(NATS_SERVICE) private readonly client: ClientProxy) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeaders(request);
     if (!token) throw new UnauthorizedException('Token not found');
 
     try {
-      request['user'] = {
-        id: 1,
-        name: 'sebas',
-        email: 'test@test.com',
-      };
-      request['token'] = token;
+      const { user, token: newToken } = await firstValueFrom(
+        this.client.send('auth.verify.user', token),
+      );
+
+      request['user'] = user;
+      request['token'] = newToken;
     } catch {
       throw new UnauthorizedException();
     }
